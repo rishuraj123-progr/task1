@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <title>Fetch Data and Populate Table</title>
+    </head>
+    <body>
+        <table id="table" border="1">
+            <tr>
+                <td>Product_Name</td>
+                <td>Color</td>
+                <td>Size</td>
+                <td>Weight</td>
+            </tr>
+        </table>
+        <script type="text/javascript">
+            fetchData();
+            function fetchData() {
+fetch("http://localhost:4000/")
+                    .then((response) => response.json())
+                    .then((data) => {
+                        const tableBody = document.querySelector("#table");
+                        data.forEach((customer) => {
+                            const newRow = document.createElement("tr");
+ 
+                            for (const key in customer) {
+                                const cell = document.createElement("td");
+                                cell.innerHTML = customer[key];
+                                newRow.appendChild(cell);
+                            }
+                            tableBody.appendChild(newRow);
+                        });
+                    })
+                    .catch((err) => {
+                        console.log("Error fetching data:", err);
+                    });
+            }
+        </script>
+    </body>
+</html>

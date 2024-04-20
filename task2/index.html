@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <title>Fetch Data and Populate Table</title>
+    </head>
+    <body>
+        <table id="table" border="1">
+            <tr>
+                <td class="maintain">CustomerId</td>
+                <td class="maintain">NameStyle</td>
+                <td class="maintain">Tittle</td>
+                <td class="maintain">Firstname</td>
+                <td class="maintain">MiddleName</td>
+                <td class="maintain">LastName</td>
+                <td class="maintain">Suffix</td>
+                <td class="maintain">Company name</td>
+                <td class="maintain">Sales person</td>
+                <td class="maintain">Email address</td>
+                <td class="maintain">phone</td>
+                <td class="maintain">password hashed</td>
+                <td class="maintain">password salt</td>
+                <td class="maintain">row guid</td>
+                <td class="maintain">modified date</td>
+            </tr>
+        </table>
+        <button onclick="fetchData()"></button>
+        <script type="text/javascript">
+            function fetchData() {
+fetch("http://localhost:3000/")
+                    .then((response) => response.json())
+                    .then((data) => {
+                        const tableBody = document.querySelector("#table");
+                        data.forEach((customer) => {
+                            const newRow = document.createElement("tr");
+ 
+                            for (const key in customer) {
+                                const cell = document.createElement("td");
+                                cell.innerHTML = customer[key];
+                                newRow.appendChild(cell);
+                            }
+                            tableBody.appendChild(newRow);
+                        });
+                    })
+                    .catch((err) => {
+                        console.log("Error fetching data:", err);
+                    });
+            }
+        </script>
+    </body>
+</html>
